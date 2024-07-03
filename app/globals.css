@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.rlx-headline70 {
+  @apply text-[2.25rem] font-bold leading-[1.1em] md:text-[4.375rem];
+}
+.rlx-headline50 {
+  @apply text-[1.875rem] font-bold leading-[1.2em] md:text-[3.125rem];
+}
+.rlx-headline36 {
+  @apply text-[1.5rem] font-bold leading-[1.2em] md:text-[2.25rem];
+}
+.rlx-headline30 {
+  @apply text-[1.375rem] font-bold leading-[1.2em] md:text-[1.875rem];
+}
+.rlx-headline26 {
+  @apply text-[1.375rem] font-bold leading-[1.2em] md:text-[1.625rem];
+}
+.rlx-body24-light {
+  @apply text-[1.25rem] font-light leading-[1.2em] md:text-[1.5rem];
+}
+.rlx-body24-bold {
+  @apply text-[1.25rem] font-bold leading-[1.2em] md:text-[1.5rem];
+}
+.rlx-body20-light {
+  @apply text-[1.25rem] font-light leading-[1.6em] md:text-[1.25rem];
+}
+.rlx-body20-bold {
+  @apply text-[1.25rem] font-bold leading-[1.6em] md:text-[1.25rem];
+}
+.rlx-legend16-light {
+  @apply text-[0.75rem] font-light leading-[1.1em] md:text-[1rem];
+}
+.rlx-legend16-bold {
+  @apply text-[0.75rem] font-bold leading-[1.1em] md:text-[1rem];
+}
+.rlx-legend14-bold {
+  @apply text-[0.625rem] font-bold leading-[1.1em] md:text-[0.875rem];
+}
+.rlx-fixed22 {
+  @apply text-[1.375rem] font-bold leading-[1.6em];
+}
+.rlx-fixed16 {
+  @apply text-[1rem] font-bold leading-[1.1em];
+}
+.rlx-fixed14 {
+  @apply text-[0.875rem] font-bold leading-[1.1em];
+}
+.rlx-quote50 {
+  @apply text-[1.875rem] font-normal leading-[1.6em] md:text-[3.125rem];
+}
