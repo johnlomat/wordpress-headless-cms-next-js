@@ -1,6 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
-import { redirect } from "next/navigation";
 import Link from "next/link";
 import getProducts from "@/lib/getProducts";
 import getImages from "@/lib/getImages";
@@ -12,25 +11,31 @@ const ProductPage = async ({
 }: {
   params: { productSlug: string; categorySlug: string };
 }) => {
+  // Construct URL to fetch product data based on slug
   const productsUrl = `${process.env.WORDPRESS_DOMAIN}/wp-json/wp/v2/products?slug=${params.productSlug}`;
 
+  // Fetch product data
   const products = await getProducts(productsUrl);
 
+  // Handle case where no products are found
   if (!products || products.length === 0) {
     notFound();
   }
 
-  const product = products[0]; // Assuming the first product is the one we need
+  // Assume the first product is the one we need based on the slug
+  const product = products[0];
 
+  // Fetch product categories and validate the category slug
   const productCategories = await getProductCategories(
     product.product_categories,
   ).then((productCat) => productCat.slug);
 
+  // Redirect if the category slug doesn't match
   if (params.categorySlug !== productCategories) {
     redirect(`/rolex-watches/${productCategories}/${params.productSlug}`);
   }
 
-  // Extracting meta data values
+  // Extract relevant product data
   const productTitle = product.title.rendered;
   const modelName = product.acf.model_name;
   const reference = product.acf.reference;
@@ -44,7 +49,9 @@ const ProductPage = async ({
   const powerReserve = product.acf.power_reserve;
   const certification = product.acf.certification;
   const brochure = product.acf.brochure;
-  const producImage = await getImages(product.featured_media).then(
+
+  // Fetch images and their alt texts
+  const productImage = await getImages(product.featured_media).then(
     (image) => image.media_details.sizes.full.source_url,
   );
   const productImageAltText = await getImages(product.featured_media).then(
@@ -57,11 +64,12 @@ const ProductPage = async ({
     product.acf.specification_image,
   ).then((image) => image.alt_text);
 
+  // Define specifications for rendering
   const specificationsOne = [
     { label: "Reference", value: reference },
     { label: "Model Case", value: modelCase },
-    { label: "Water-resistance", value: waterResistance },
-    { label: "Water-resistance", value: bezel },
+    { label: "Water Resistance", value: waterResistance },
+    { label: "Bezel", value: bezel },
     { label: "Dial", value: dial },
   ];
 
@@ -69,44 +77,48 @@ const ProductPage = async ({
     { label: "Bracelet", value: bracelet },
     { label: "Movement", value: movement },
     { label: "Calibre", value: calibre },
-    { label: "Power reserve", value: powerReserve },
+    { label: "Power Reserve", value: powerReserve },
     { label: "Certification", value: certification },
   ];
 
-  const SpecificationItem = (specification: any) => (
+  // Component for rendering each specification item
+  const SpecificationItem = ({
+    label,
+    value,
+  }: {
+    label: string;
+    value: string;
+  }) => (
     <div>
-      <div className="text-rlx-brown rlx-body20-bold">
-        {specification.label}
-      </div>
-      <div className="text-rlx-black rlx-body20-light">
-        {specification.value}
-      </div>
+      <div className="rlx-body20-bold text-rlx-brown">{label}</div>
+      <div className="rlx-body20-light text-rlx-black">{value}</div>
     </div>
   );
 
+  // Render the product page with fetched data
   return (
     <>
       <Section className="bg-rlx-light-beige pb-[3.75rem!important] pt-[0!important] lg:py-[0!important]">
         <Row className="flex flex-col-reverse lg:flex-row">
           <Col className="flex w-full flex-col justify-center lg:w-1/3">
             <h1 className="leading-[1.2em]">
-              <span className="text-rlx-brown rlx-body24-bold mb-[0.625rem] block">
-                Rolex{" "}
+              <span className="rlx-body24-bold mb-[0.625rem] block text-rlx-brown">
+                Rolex
               </span>
-              <span className="text-rlx-brown rlx-headline50 mb-[0.625rem] block">
+              <span className="rlx-headline50 mb-[0.625rem] block text-rlx-brown">
                 {modelName}
               </span>
-              <span className="text-rlx-black rlx-body20-light block">
+              <span className="rlx-body20-light block text-rlx-black">
                 {modelCase}
               </span>
-              <span className="text-rlx-black rlx-body20-light block">
+              <span className="rlx-body20-light block text-rlx-black">
                 {productTitle}
               </span>
             </h1>
           </Col>
           <Col className="w-full lg:w-1/3">
             <Image
-              src={producImage}
+              src={productImage}
               alt={productImageAltText}
               width={800}
               height={1180}
@@ -121,12 +133,20 @@ const ProductPage = async ({
             <div className="flex flex-row space-x-[8.483%] pb-[1.875rem] lg:flex-row">
               <div className="w-1/2 space-y-[1.25rem]">
                 {specificationsOne.map((specification, index) => (
-                  <SpecificationItem key={index} {...specification} />
+                  <SpecificationItem
+                    key={index}
+                    label={specification.label}
+                    value={specification.value}
+                  />
                 ))}
               </div>
               <div className="w-1/2 space-y-[1.25rem]">
                 {specificationsTwo.map((specification, index) => (
-                  <SpecificationItem key={index} {...specification} />
+                  <SpecificationItem
+                    key={index}
+                    label={specification.label}
+                    value={specification.value}
+                  />
                 ))}
               </div>
             </div>
