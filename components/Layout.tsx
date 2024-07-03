@@ -1,5 +1,5 @@
 import React from "react";
-import { removeDuplicateClasses } from "@/lib/htmlClasses";
+import { removeDuplicateClasses } from "@/utils/htmlClasses";
 
 export const Section = ({
   children,
