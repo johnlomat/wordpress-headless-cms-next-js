@@ -1,12 +1,12 @@
 import React from "react";
-import { removeDuplicateClasses } from "@/utils/htmlClasses";
+import { removeDuplicateClasses } from "@/utils/helpers";
 
 export const Section = ({
   children,
   className = "",
 }: Readonly<{
   children: React.ReactNode;
-  className?: any;
+  className?: string;
 }>) => {
   return (
     <>
@@ -21,18 +21,28 @@ export const Section = ({
   );
 };
 
-export const Row = ({
+interface RowProps {
+  children: React.ReactNode;
+  className?: string;
+  size?: "sm";
+}
+
+const sizeMap = {
+  sm: "max-w-[46.875rem]",
+};
+
+export const Row: React.FC<Readonly<RowProps>> = ({
   children,
   className = "",
-}: Readonly<{
-  children: React.ReactNode;
-  className?: any;
-}>) => {
+  size,
+}) => {
+  const sizeValue = size ? `${sizeMap[size]} ` : "";
+
   return (
     <>
       <div
         className={removeDuplicateClasses(
-          `${!className ? "" : `${className} `}container flex flex-col md:w-[70%] lg:w-full lg:flex-row`,
+          `${!className ? "" : `${className} `}${sizeValue}container flex flex-col md:w-[70%] lg:w-full lg:flex-row`,
         )}
       >
         {children}
@@ -46,7 +56,7 @@ export const Col = ({
   className = "",
 }: Readonly<{
   children: React.ReactNode;
-  className?: any;
+  className?: string;
 }>) => {
   return (
     <>

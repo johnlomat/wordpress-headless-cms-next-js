@@ -1,10 +1,11 @@
 import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
-import getProducts from "@/lib/getProducts";
-import getImages from "@/lib/getImages";
-import getProductCategories from "@/lib/getProductCategories";
-import { Section, Row, Col } from "@/components/Layout";
+import getProducts from "@/lib/get-products";
+import getImages from "@/lib/get-images";
+import getProductCategories from "@/lib/get-product-categories";
+import { Section, Row, Col } from "@/components/Layouts";
+import SpecificationItem from "@/components/SpecificationItem";
+import { SecondaryButton } from "@/components/Buttons";
 
 const ProductPage = async ({
   params,
@@ -49,20 +50,23 @@ const ProductPage = async ({
   const powerReserve = product.acf.power_reserve;
   const certification = product.acf.certification;
   const brochure = product.acf.brochure;
+  const featuredTitleOne = product.acf.feature_1_title;
+  const featuredTextOne = product.acf.feature_1_text;
 
   // Fetch images and their alt texts
-  const productImage = await getImages(product.featured_media).then(
-    (image) => image.media_details.sizes.full.source_url,
-  );
-  const productImageAltText = await getImages(product.featured_media).then(
-    (image) => image.alt_text,
-  );
-  const specificationImage = await getImages(
-    product.acf.specification_image,
-  ).then((image) => image.media_details.sizes.full.source_url);
-  const specificationImageAltText = await getImages(
-    product.acf.specification_image,
-  ).then((image) => image.alt_text);
+  let imageData;
+
+  imageData = await getImages(product.featured_media);
+  const productImageSrc = imageData.media_details.sizes.full.source_url;
+  const productImageAltText = imageData.alt_text;
+
+  imageData = await getImages(product.acf.specification_image);
+  const specificationImage = imageData.media_details.sizes.full.source_url;
+  const specificationImageAltText = imageData.alt_text;
+
+  imageData = await getImages(product.acf.feature_1_image_desktop);
+  const featuredImageOne = imageData.media_details.sizes.full.source_url;
+  const featuredImageOneAltText = imageData.alt_text;
 
   // Define specifications for rendering
   const specificationsOne = [
@@ -81,25 +85,11 @@ const ProductPage = async ({
     { label: "Certification", value: certification },
   ];
 
-  // Component for rendering each specification item
-  const SpecificationItem = ({
-    label,
-    value,
-  }: {
-    label: string;
-    value: string;
-  }) => (
-    <div>
-      <div className="rlx-body20-bold text-rlx-brown">{label}</div>
-      <div className="rlx-body20-light text-rlx-black">{value}</div>
-    </div>
-  );
-
   // Render the product page with fetched data
   return (
     <>
       <Section className="bg-rlx-light-beige pb-[3.75rem!important] pt-[0!important] lg:py-[0!important]">
-        <Row className="flex flex-col-reverse lg:flex-row">
+        <Row className="flex-col-reverse">
           <Col className="flex w-full flex-col justify-center lg:w-1/3">
             <h1 className="leading-[1.2em]">
               <span className="rlx-body24-bold mb-[0.625rem] block text-rlx-brown">
@@ -118,7 +108,7 @@ const ProductPage = async ({
           </Col>
           <Col className="w-full lg:w-1/3">
             <Image
-              src={productImage}
+              src={productImageSrc}
               alt={productImageAltText}
               width={800}
               height={1180}
@@ -128,40 +118,70 @@ const ProductPage = async ({
         </Row>
       </Section>
       <Section className="bg-rlx-beige pt-[0!important] lg:pt-[3.75rem!important]">
-        <Row className="flex-col-reverse lg:flex-row">
+        <Row className="flex-col-reverse">
           <Col className="flex w-full flex-col justify-center lg:w-4/5">
             <div className="flex flex-row space-x-[8.483%] pb-[1.875rem] lg:flex-row">
               <div className="w-1/2 space-y-[1.25rem]">
                 {specificationsOne.map((specification, index) => (
-                  <SpecificationItem
-                    key={index}
-                    label={specification.label}
-                    value={specification.value}
-                  />
+                  <SpecificationItem key={index}>
+                    <SpecificationItem.Label>
+                      {specification.label}
+                    </SpecificationItem.Label>
+                    <SpecificationItem.Value>
+                      {specification.value}
+                    </SpecificationItem.Value>
+                  </SpecificationItem>
                 ))}
               </div>
               <div className="w-1/2 space-y-[1.25rem]">
                 {specificationsTwo.map((specification, index) => (
-                  <SpecificationItem
-                    key={index}
-                    label={specification.label}
-                    value={specification.value}
-                  />
+                  <SpecificationItem key={index}>
+                    <SpecificationItem.Label>
+                      {specification.label}
+                    </SpecificationItem.Label>
+                    <SpecificationItem.Value>
+                      {specification.value}
+                    </SpecificationItem.Value>
+                  </SpecificationItem>
                 ))}
               </div>
             </div>
-            <div>
-              <Link href={brochure} target="_blank">
-                Download Brochure
-              </Link>
+            <div className="border-t-[1px] border-[rgba(118,118,118,0.3)] pt-[1.875rem]">
+              <SecondaryButton
+                link={brochure}
+                text="Download Brochure"
+                newTab
+                iconRight
+              />
             </div>
           </Col>
           <Col className="w-auto">
             <Image
               src={specificationImage}
               alt={specificationImageAltText}
-              width={800}
-              height={1180}
+              width={750}
+              height={844}
+              unoptimized
+            />
+          </Col>
+        </Row>
+      </Section>
+      <Section className="bg-rlx-light-beige">
+        <Row size="sm">
+          <Col className="w-full space-y-[5.625rem]">
+            <div className="space-y-[1.25rem]">
+              <div className="rlx-headline50 text-rlx-brown">
+                <h2>{featuredTitleOne}</h2>
+              </div>
+              <div className="rlx-body20-light text-rlx-black">
+                <p>{featuredTextOne}</p>
+              </div>
+            </div>
+            <Image
+              src={featuredImageOne}
+              alt={featuredImageOneAltText}
+              width={750}
+              height={844}
               unoptimized
             />
           </Col>
