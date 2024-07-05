@@ -50,3 +50,9 @@
 .rlx-quote50 {
   @apply text-[1.875rem] font-normal leading-[1.6em] md:text-[3.125rem];
 }
+.rlx-section-spacing {
+  @apply py-[3.75rem] md:py-[5.625rem];
+}
+.rlx-spacing-y {
+  @apply space-y-[3.75rem] md:space-y-[5.625rem];
+}
