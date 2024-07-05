@@ -12,7 +12,7 @@ export const Section = ({
     <>
       <section
         className={removeDuplicateClasses(
-          `${!className ? "" : `${className} `}relative py-[3.75rem] md:py-[5.625rem]`,
+          `${!className ? "" : `${className} `}relative rlx-section-spacing`,
         )}
       >
         {children}

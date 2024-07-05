@@ -1,89 +1,118 @@
 import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
 import getProducts from "@/lib/get-products";
-import getImages from "@/lib/get-images";
-import getProductCategories from "@/lib/get-product-categories";
 import { Section, Row, Col } from "@/components/Layouts";
 import SpecificationItem from "@/components/SpecificationItem";
 import { SecondaryButton } from "@/components/Buttons";
+import Price from "@/components/Price";
+import FeatureItem from "@/components/FeatureItem";
 
 const ProductPage = async ({
   params,
 }: {
   params: { productSlug: string; categorySlug: string };
 }) => {
-  // Construct URL to fetch product data based on slug
-  const productsUrl = `${process.env.WORDPRESS_DOMAIN}/wp-json/wp/v2/products?slug=${params.productSlug}`;
-
   // Fetch product data
-  const products = await getProducts(productsUrl);
+  const productData = await getProducts(params.productSlug);
 
   // Handle case where no products are found
-  if (!products || products.length === 0) {
+  if (!productData || productData.length === 0) {
     notFound();
   }
 
-  // Assume the first product is the one we need based on the slug
-  const product = products[0];
-
-  // Fetch product categories and validate the category slug
-  const productCategories = await getProductCategories(
-    product.product_categories,
-  ).then((productCat) => productCat.slug);
+  const productCategories =
+    productData.data.product.productCategories.nodes[0].slug;
 
   // Redirect if the category slug doesn't match
   if (params.categorySlug !== productCategories) {
     redirect(`/rolex-watches/${productCategories}/${params.productSlug}`);
   }
 
+  const productACF = productData.data.product.rolexProducts;
+
   // Extract relevant product data
-  const productTitle = product.title.rendered;
-  const modelName = product.acf.model_name;
-  const reference = product.acf.reference;
-  const modelCase = product.acf.model_case;
-  const waterResistance = product.acf["water-resistance"];
-  const bezel = product.acf.bezel;
-  const dial = product.acf.dial;
-  const bracelet = product.acf.bracelet;
-  const movement = product.acf.movement;
-  const calibre = product.acf.calibre;
-  const powerReserve = product.acf.power_reserve;
-  const certification = product.acf.certification;
-  const brochure = product.acf.brochure;
-  const featuredTitleOne = product.acf.feature_1_title;
-  const featuredTextOne = product.acf.feature_1_text;
+  const productTitle = productData.data.product.title;
+  const modelName = productACF.modelName;
+  const regularPrice = productACF.regularPrice;
+  const modelCase = productACF.modelCase;
+  const brochure = productACF.brochure;
 
-  // Fetch images and their alt texts
-  let imageData;
-
-  imageData = await getImages(product.featured_media);
-  const productImageSrc = imageData.media_details.sizes.full.source_url;
-  const productImageAltText = imageData.alt_text;
-
-  imageData = await getImages(product.acf.specification_image);
-  const specificationImage = imageData.media_details.sizes.full.source_url;
-  const specificationImageAltText = imageData.alt_text;
-
-  imageData = await getImages(product.acf.feature_1_image_desktop);
-  const featuredImageOne = imageData.media_details.sizes.full.source_url;
-  const featuredImageOneAltText = imageData.alt_text;
+  const productImageSrc = productData.data.product.featuredImage.node.sourceUrl;
+  const productImageAltText =
+    productData.data.product.featuredImage.node.altText;
 
   // Define specifications for rendering
   const specificationsOne = [
-    { label: "Reference", value: reference },
-    { label: "Model Case", value: modelCase },
-    { label: "Water Resistance", value: waterResistance },
-    { label: "Bezel", value: bezel },
-    { label: "Dial", value: dial },
+    { label: "Reference", value: productACF.reference },
+    { label: "Model Case", value: productACF.modelCase },
+    { label: "Water Resistance", value: productACF.waterResistance },
+    { label: "Bezel", value: productACF.bezel },
+    { label: "Dial", value: productACF.dial },
   ];
 
   const specificationsTwo = [
-    { label: "Bracelet", value: bracelet },
-    { label: "Movement", value: movement },
-    { label: "Calibre", value: calibre },
-    { label: "Power Reserve", value: powerReserve },
-    { label: "Certification", value: certification },
+    { label: "Bracelet", value: productACF.bracelet },
+    { label: "Movement", value: productACF.movement },
+    { label: "Calibre", value: productACF.movement },
+    { label: "Power Reserve", value: productACF.powerReserve },
+    { label: "Certification", value: productACF.certification },
   ];
+
+  const specificationImage = productACF.specificationImage.node.sourceUrl;
+  const specificationImageAltText = productACF.specificationImage.node.altTest;
+
+  const features = [
+    {
+      title: productACF.feature1Title,
+      text: productACF.feature1Text,
+      desktopImage: {
+        src: productACF.feature1ImageDesktop.node.sourceUrl,
+        alt_text: productACF.feature1ImageDesktop.node.altText,
+        width: productACF.feature1ImageDesktop.node.mediaDetails.width,
+        height: productACF.feature1ImageDesktop.node.mediaDetails.height,
+      },
+      mobileImage: {
+        src: productACF.feature1ImageMobile.node.sourceUrl,
+        alt_text: productACF.feature1ImageMobile.node.altText,
+        width: productACF.feature1ImageMobile.node.mediaDetails.width,
+        height: productACF.feature1ImageMobile.node.mediaDetails.height,
+      },
+    },
+    {
+      title: productACF.feature2Title,
+      text: productACF.feature2Text,
+      desktopImage: {
+        src: productACF.feature2ImageDesktop.node.sourceUrl,
+        alt_text: productACF.feature2ImageDesktop.node.altText,
+        width: productACF.feature2ImageDesktop.node.mediaDetails.width,
+        height: productACF.feature2ImageDesktop.node.mediaDetails.height,
+      },
+      mobileImage: {
+        src: productACF.feature2ImageMobile.node.sourceUrl,
+        alt_text: productACF.feature2ImageMobile.node.altText,
+        width: productACF.feature2ImageMobile.node.mediaDetails.width,
+        height: productACF.feature2ImageMobile.node.mediaDetails.height,
+      },
+    },
+    {
+      title: productACF.feature3Title,
+      text: productACF.feature3Text,
+      desktopImage: {
+        src: productACF.feature3ImageDesktop.node.sourceUrl,
+        alt_text: productACF.feature3ImageDesktop.node.altText,
+        width: productACF.feature3ImageDesktop.node.mediaDetails.width,
+        height: productACF.feature3ImageDesktop.node.mediaDetails.height,
+      },
+      mobileImage: {
+        src: productACF.feature3ImageMobile.node.sourceUrl,
+        alt_text: productACF.feature3ImageMobile.node.altText,
+        width: productACF.feature3ImageMobile.node.mediaDetails.width,
+        height: productACF.feature3ImageMobile.node.mediaDetails.height,
+      },
+    },
+  ];
+
+  const [lastFeature] = features.slice(-1);
 
   // Render the product page with fetched data
   return (
@@ -105,6 +134,13 @@ const ProductPage = async ({
                 {productTitle}
               </span>
             </h1>
+            <div className="mb-4">
+              <Price price={regularPrice} />
+            </div>
+            <SecondaryButton
+              link="#model-availability"
+              text="Model availability"
+            />
           </Col>
           <Col className="w-full lg:w-1/3">
             <Image
@@ -166,24 +202,65 @@ const ProductPage = async ({
           </Col>
         </Row>
       </Section>
-      <Section className="bg-rlx-light-beige">
+      <Section className="rlx-spacing-y bg-rlx-light-beige">
         <Row size="sm">
-          <Col className="w-full space-y-[5.625rem]">
-            <div className="space-y-[1.25rem]">
-              <div className="rlx-headline50 text-rlx-brown">
-                <h2>{featuredTitleOne}</h2>
-              </div>
-              <div className="rlx-body20-light text-rlx-black">
-                <p>{featuredTextOne}</p>
-              </div>
-            </div>
-            <Image
-              src={featuredImageOne}
-              alt={featuredImageOneAltText}
-              width={750}
-              height={844}
-              unoptimized
-            />
+          <Col className="rlx-spacing-y w-full">
+            {features.slice(0, 2).map((feature, index) => (
+              <FeatureItem key={index}>
+                <FeatureItem.Textblock>
+                  <FeatureItem.Title>{feature.title}</FeatureItem.Title>
+                  <FeatureItem.Text>{feature.text}</FeatureItem.Text>
+                </FeatureItem.Textblock>
+                <Image
+                  src={feature.desktopImage.src}
+                  alt={feature.desktopImage.alt_text}
+                  width={feature.desktopImage.width}
+                  height={feature.desktopImage.height}
+                  className="hidden md:block"
+                  unoptimized
+                />
+                <Image
+                  src={feature.mobileImage.src}
+                  alt={feature.mobileImage.alt_text}
+                  width={feature.mobileImage.width}
+                  height={feature.mobileImage.height}
+                  className="block md:hidden"
+                  unoptimized
+                />
+              </FeatureItem>
+            ))}
+            {
+              <FeatureItem key={features.length - 1}>
+                <FeatureItem.Textblock>
+                  <FeatureItem.Title>{lastFeature.title}</FeatureItem.Title>
+                  <FeatureItem.Text>{lastFeature.text}</FeatureItem.Text>
+                </FeatureItem.Textblock>
+              </FeatureItem>
+            }
+          </Col>
+        </Row>
+        <Row>
+          <Col className="rlx-spacing-y w-full">
+            {
+              <FeatureItem key={features.length - 1}>
+                <Image
+                  src={lastFeature.desktopImage.src}
+                  alt={lastFeature.desktopImage.alt_text}
+                  width={lastFeature.desktopImage.width}
+                  height={lastFeature.desktopImage.height}
+                  className="hidden w-full md:block"
+                  unoptimized
+                />
+                <Image
+                  src={lastFeature.mobileImage.src}
+                  alt={lastFeature.mobileImage.alt_text}
+                  width={lastFeature.mobileImage.width}
+                  height={lastFeature.mobileImage.height}
+                  className="block w-full md:hidden"
+                  unoptimized
+                />
+              </FeatureItem>
+            }
           </Col>
         </Row>
       </Section>

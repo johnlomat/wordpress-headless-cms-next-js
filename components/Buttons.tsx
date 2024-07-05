@@ -40,7 +40,7 @@ export const SecondaryButton: React.FC<SecondaryButtonProps> = ({
       )}
       {text}
       {!iconRight && (
-        <FaChevronRight className="relative top-[0.1875rem] ml-[0.375rem] text-[0.75rem]" />
+        <FaChevronRight className="relative top-[0.275rem] ml-[0.375rem] text-[0.65rem]" />
       )}
     </Button>
   );
