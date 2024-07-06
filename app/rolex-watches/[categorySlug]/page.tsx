@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Section, Row, Col } from "@/components/Layouts";
 import ProductCard from "@/components/ProductCard";
 import { getProductCategoryBySlug } from "@/lib/get-products";
+import CustomBreadcrumb from "@/components/Breadcrumb";
 
 export async function generateMetadata({
   params,
@@ -42,8 +43,22 @@ const ProductCategory = async ({
   const title = productCategoryData.data.productCategory.name;
   const products = productCategoryData.data.productCategory.products.nodes;
 
+  const breadcrumbItems = [
+    { label: "Rolex Watches", href: "/rolex-watches" },
+    {
+      label: title,
+    },
+  ];
+
   return (
     <>
+      <Section className="bg-rlx-rolex-green py-[1.5rem!important]">
+        <Row>
+          <Col>
+            <CustomBreadcrumb items={breadcrumbItems} />
+          </Col>
+        </Row>
+      </Section>
       <Section className="bg-rlx-light-beige">
         <Row className="max-w-[70rem] space-y-[2.5rem]">
           <Col className="w-full">

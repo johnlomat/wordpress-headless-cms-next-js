@@ -1,18 +1,9 @@
-import React from "react"; // Import React
+import React from "react";
 import Link from "next/link";
-import { CustomFlowbiteTheme, Button } from "flowbite-react";
+import { Button } from "flowbite-react";
 import { FaChevronRight } from "react-icons/fa6";
 import { IoMdDownload } from "react-icons/io";
-
-const secondaryButtonTheme: CustomFlowbiteTheme["button"] = {
-  base: "inline-block rlx-fixed14",
-  color: {
-    primary: "text-rlx-green",
-  },
-  pill: {
-    off: "rounded-0",
-  },
-};
+import { secondaryButtonTheme } from "./theme/flowbite-react/ButtonTheme";
 
 interface SecondaryButtonProps {
   link: string;
@@ -33,14 +24,13 @@ export const SecondaryButton: React.FC<SecondaryButtonProps> = ({
       href={link}
       theme={secondaryButtonTheme}
       color="primary"
+      size="none"
       target={newTab ? "_blank" : undefined}
     >
-      {iconRight && (
-        <IoMdDownload className="relative top-[0.1575rem] mr-[0.375rem] text-[1rem]" />
-      )}
+      {iconRight && <IoMdDownload className="mr-[0.375rem] text-[1rem]" />}
       {text}
       {!iconRight && (
-        <FaChevronRight className="relative top-[0.275rem] ml-[0.375rem] text-[0.65rem]" />
+        <FaChevronRight className="relative top-[0.225rem] ml-[0.375rem] text-[0.65rem]" />
       )}
     </Button>
   );

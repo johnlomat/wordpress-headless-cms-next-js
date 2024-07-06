@@ -148,6 +148,7 @@ export const getProductBySlug = async (productSlug: string) => {
               }
               productCategories {
                 nodes {
+                  name
                   slug
                 }
               }

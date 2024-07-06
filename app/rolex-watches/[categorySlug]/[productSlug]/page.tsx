@@ -6,6 +6,7 @@ import SpecificationItem from "@/components/SpecificationItem";
 import { SecondaryButton } from "@/components/Buttons";
 import Price from "@/components/Price";
 import FeatureItem from "@/components/FeatureItem";
+import CustomBreadcrumb from "@/components/Breadcrumb";
 
 export async function generateMetadata({
   params,
@@ -40,11 +41,10 @@ const ProductPage = async ({
     notFound();
   }
 
-  const productCategories =
-    productData.data.product.productCategories.nodes[0].slug;
+  const productCategories = productData.data.product.productCategories.nodes[0];
 
   // Redirect if the category slug doesn't match
-  if (params.categorySlug !== productCategories) {
+  if (params.categorySlug !== productCategories.slug) {
     redirect(`/rolex-watches/${productCategories}/${params.productSlug}`);
   }
 
@@ -134,9 +134,25 @@ const ProductPage = async ({
 
   const [lastFeature] = features.slice(-1);
 
+  const breadcrumbItems = [
+    { label: "Rolex Watches", href: "/rolex-watches" },
+    {
+      label: productCategories.name,
+      href: `/rolex-watches/${productCategories.slug}`,
+    },
+    { label: productTitle },
+  ];
+
   // Render the product page with fetched data
   return (
     <>
+      <Section className="bg-rlx-rolex-green py-[1.5rem!important]">
+        <Row>
+          <Col>
+            <CustomBreadcrumb items={breadcrumbItems} />
+          </Col>
+        </Row>
+      </Section>
       <Section className="bg-rlx-light-beige pb-[3.75rem!important] pt-[0!important] lg:py-[0!important]">
         <Row className="flex-col-reverse lg:flex-row">
           <Col className="flex w-full flex-col justify-center lg:w-1/3">
