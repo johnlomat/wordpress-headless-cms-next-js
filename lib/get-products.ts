@@ -1,6 +1,6 @@
 const WPGRAPHQL_API = `${process.env.WORDPRESS_GRAPHQL_API}`;
 
-const getProducts = async (productSlug: string) => {
+export const getProductBySlug = async (productSlug: string) => {
   try {
     const response = await fetch(WPGRAPHQL_API, {
       method: "POST",
@@ -9,7 +9,7 @@ const getProducts = async (productSlug: string) => {
       },
       body: JSON.stringify({
         query: `
-          query RolexProducts($productSlug: ID!) {
+          query RolexProductBySlug($productSlug: ID!) {
             product(idType: SLUG, id: $productSlug) {
               featuredImage {
                 node {
@@ -173,4 +173,41 @@ const getProducts = async (productSlug: string) => {
   }
 };
 
-export default getProducts;
+export const getProductMetaData = async (productSlug: string) => {
+  try {
+    const response = await fetch(WPGRAPHQL_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: `
+          query RolexProductSeo($productSlug: ID!) {
+          product(idType: SLUG, id: $productSlug) {
+            seo {
+              openGraph {
+                title
+                description
+              }
+            }
+          }
+        }
+        `,
+        variables: {
+          productSlug: productSlug,
+        },
+      }),
+      next: {
+        revalidate: 3600,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching products:", error);
+  }
+};

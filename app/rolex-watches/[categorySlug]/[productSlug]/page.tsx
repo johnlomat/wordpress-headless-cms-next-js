@@ -1,11 +1,28 @@
 import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
-import getProducts from "@/lib/get-products";
+import { getProductBySlug, getProductMetaData } from "@/lib/get-products";
 import { Section, Row, Col } from "@/components/Layouts";
 import SpecificationItem from "@/components/SpecificationItem";
 import { SecondaryButton } from "@/components/Buttons";
 import Price from "@/components/Price";
 import FeatureItem from "@/components/FeatureItem";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { productSlug: string };
+}) {
+  // read route params
+  const id = params.productSlug;
+
+  // fetch data
+  const productData = await getProductMetaData(params.productSlug);
+
+  return {
+    title: productData.data.product.seo.openGraph.title,
+    description: productData.data.product.seo.openGraph.description,
+  };
+}
 
 const ProductPage = async ({
   params,
@@ -13,7 +30,7 @@ const ProductPage = async ({
   params: { productSlug: string; categorySlug: string };
 }) => {
   // Fetch product data
-  const productData = await getProducts(params.productSlug);
+  const productData = await getProductBySlug(params.productSlug);
 
   // Handle case where no products are found
   if (!productData || productData.length === 0) {
