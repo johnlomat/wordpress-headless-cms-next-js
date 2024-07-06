@@ -29,6 +29,9 @@ const config: Config = {
         "rlx-beige": "#F4EFEA",
         "rlx-light-beige": "#F9F7F4",
       },
+      fontFamily: {
+        "libre-franklin": ["var(--font-libre-franklin)"],
+      },
     },
   },
   plugins: [flowbite.plugin()],

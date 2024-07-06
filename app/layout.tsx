@@ -1,7 +1,11 @@
-import { Inter } from "next/font/google";
+import { Libre_Franklin } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const libre_franklin = Libre_Franklin({
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-libre-franklin",
+});
 
 export default function RootLayout({
   children,
@@ -10,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={libre_franklin.variable}>{children}</body>
     </html>
   );
 }
