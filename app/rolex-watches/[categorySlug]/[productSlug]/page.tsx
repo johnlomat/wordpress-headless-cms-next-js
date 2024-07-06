@@ -1,6 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
-import { getProductBySlug, getProductMetaData } from "@/lib/get-products";
+import { getProductBySlug } from "@/lib/get-products";
 import { Section, Row, Col } from "@/components/Layouts";
 import SpecificationItem from "@/components/SpecificationItem";
 import { SecondaryButton } from "@/components/Buttons";
@@ -12,12 +12,15 @@ export async function generateMetadata({
 }: {
   params: { productSlug: string };
 }) {
-  // read route params
-  const id = params.productSlug;
-
   // fetch data
-  const productData = await getProductMetaData(params.productSlug);
+  const productData = await getProductBySlug(params.productSlug);
 
+  // Handle case where no products are found
+  if (!productData.data.product) {
+    notFound();
+  }
+
+  // Return Seo title and description
   return {
     title: productData.data.product.seo.openGraph.title,
     description: productData.data.product.seo.openGraph.description,
@@ -33,7 +36,7 @@ const ProductPage = async ({
   const productData = await getProductBySlug(params.productSlug);
 
   // Handle case where no products are found
-  if (!productData || productData.length === 0) {
+  if (!productData.data.product) {
     notFound();
   }
 
@@ -82,13 +85,13 @@ const ProductPage = async ({
     {
       title: productACF.feature1Title,
       text: productACF.feature1Text,
-      desktopImage: {
+      desktop_image: {
         src: productACF.feature1ImageDesktop.node.sourceUrl,
         alt_text: productACF.feature1ImageDesktop.node.altText,
         width: productACF.feature1ImageDesktop.node.mediaDetails.width,
         height: productACF.feature1ImageDesktop.node.mediaDetails.height,
       },
-      mobileImage: {
+      mobile_image: {
         src: productACF.feature1ImageMobile.node.sourceUrl,
         alt_text: productACF.feature1ImageMobile.node.altText,
         width: productACF.feature1ImageMobile.node.mediaDetails.width,
@@ -98,13 +101,13 @@ const ProductPage = async ({
     {
       title: productACF.feature2Title,
       text: productACF.feature2Text,
-      desktopImage: {
+      desktop_image: {
         src: productACF.feature2ImageDesktop.node.sourceUrl,
         alt_text: productACF.feature2ImageDesktop.node.altText,
         width: productACF.feature2ImageDesktop.node.mediaDetails.width,
         height: productACF.feature2ImageDesktop.node.mediaDetails.height,
       },
-      mobileImage: {
+      mobile_image: {
         src: productACF.feature2ImageMobile.node.sourceUrl,
         alt_text: productACF.feature2ImageMobile.node.altText,
         width: productACF.feature2ImageMobile.node.mediaDetails.width,
@@ -114,13 +117,13 @@ const ProductPage = async ({
     {
       title: productACF.feature3Title,
       text: productACF.feature3Text,
-      desktopImage: {
+      desktop_image: {
         src: productACF.feature3ImageDesktop.node.sourceUrl,
         alt_text: productACF.feature3ImageDesktop.node.altText,
         width: productACF.feature3ImageDesktop.node.mediaDetails.width,
         height: productACF.feature3ImageDesktop.node.mediaDetails.height,
       },
-      mobileImage: {
+      mobile_image: {
         src: productACF.feature3ImageMobile.node.sourceUrl,
         alt_text: productACF.feature3ImageMobile.node.altText,
         width: productACF.feature3ImageMobile.node.mediaDetails.width,
@@ -135,7 +138,7 @@ const ProductPage = async ({
   return (
     <>
       <Section className="bg-rlx-light-beige pb-[3.75rem!important] pt-[0!important] lg:py-[0!important]">
-        <Row className="flex-col-reverse">
+        <Row className="flex-col-reverse lg:flex-row">
           <Col className="flex w-full flex-col justify-center lg:w-1/3">
             <h1 className="leading-[1.2em]">
               <span className="rlx-body24-bold mb-[0.625rem] block text-rlx-brown">
@@ -170,9 +173,9 @@ const ProductPage = async ({
           </Col>
         </Row>
       </Section>
-      <Section className="bg-rlx-beige pt-[0!important] lg:pt-[3.75rem!important]">
-        <Row className="flex-col-reverse">
-          <Col className="flex w-full flex-col justify-center lg:w-4/5">
+      <Section className="bg-rlx-beige pt-[0!important] lg:pt-[5.625rem!important]">
+        <Row className="flex-col-reverse lg:flex-row">
+          <Col className="flex w-full flex-col justify-center lg:w-3/5">
             <div className="flex flex-row space-x-[8.483%] pb-[1.875rem] lg:flex-row">
               <div className="w-1/2 space-y-[1.25rem]">
                 {specificationsOne.map((specification, index) => (
@@ -208,7 +211,7 @@ const ProductPage = async ({
               />
             </div>
           </Col>
-          <Col className="w-auto">
+          <Col className="w-full lg:w-2/5">
             <Image
               src={specificationImage}
               alt={specificationImageAltText}
@@ -229,18 +232,18 @@ const ProductPage = async ({
                   <FeatureItem.Text>{feature.text}</FeatureItem.Text>
                 </FeatureItem.Textblock>
                 <Image
-                  src={feature.desktopImage.src}
-                  alt={feature.desktopImage.alt_text}
-                  width={feature.desktopImage.width}
-                  height={feature.desktopImage.height}
+                  src={feature.desktop_image.src}
+                  alt={feature.desktop_image.alt_text}
+                  width={feature.desktop_image.width}
+                  height={feature.desktop_image.height}
                   className="hidden md:block"
                   unoptimized
                 />
                 <Image
-                  src={feature.mobileImage.src}
-                  alt={feature.mobileImage.alt_text}
-                  width={feature.mobileImage.width}
-                  height={feature.mobileImage.height}
+                  src={feature.mobile_image.src}
+                  alt={feature.mobile_image.alt_text}
+                  width={feature.mobile_image.width}
+                  height={feature.mobile_image.height}
                   className="block md:hidden"
                   unoptimized
                 />
@@ -261,19 +264,19 @@ const ProductPage = async ({
             {
               <FeatureItem key={features.length - 1}>
                 <Image
-                  src={lastFeature.desktopImage.src}
-                  alt={lastFeature.desktopImage.alt_text}
-                  width={lastFeature.desktopImage.width}
-                  height={lastFeature.desktopImage.height}
+                  src={lastFeature.desktop_image.src}
+                  alt={lastFeature.desktop_image.alt_text}
+                  width={lastFeature.desktop_image.width}
+                  height={lastFeature.desktop_image.height}
                   className="hidden w-full md:block"
                   unoptimized
                 />
                 <Image
-                  src={lastFeature.mobileImage.src}
-                  alt={lastFeature.mobileImage.alt_text}
-                  width={lastFeature.mobileImage.width}
-                  height={lastFeature.mobileImage.height}
-                  className="block w-full md:hidden"
+                  src={lastFeature.mobile_image.src}
+                  alt={lastFeature.mobile_image.alt_text}
+                  width={lastFeature.mobile_image.width}
+                  height={lastFeature.mobile_image.height}
+                  className="mt-[0!important] block w-full md:hidden"
                   unoptimized
                 />
               </FeatureItem>

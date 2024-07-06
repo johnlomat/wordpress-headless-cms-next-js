@@ -4,10 +4,10 @@ import { removeDuplicateClasses } from "@/utils/helpers";
 export const Section = ({
   children,
   className = "",
-}: Readonly<{
+}: {
   children: React.ReactNode;
   className?: string;
-}>) => {
+}) => {
   return (
     <>
       <section
@@ -31,18 +31,14 @@ const sizeMap = {
   sm: "max-w-[46.875rem]",
 };
 
-export const Row: React.FC<Readonly<RowProps>> = ({
-  children,
-  className = "",
-  size,
-}) => {
+export const Row: React.FC<RowProps> = ({ children, className = "", size }) => {
   const sizeValue = size ? `${sizeMap[size]} ` : "";
 
   return (
     <>
       <div
         className={removeDuplicateClasses(
-          `${!className ? "" : `${className} `}${sizeValue}container flex flex-col md:w-[70%] lg:w-full lg:flex-row`,
+          `${!className ? "" : `${className} `}${sizeValue}container flex flex-wrap md:w-[75%] lg:w-full`,
         )}
       >
         {children}
@@ -54,10 +50,10 @@ export const Row: React.FC<Readonly<RowProps>> = ({
 export const Col = ({
   children,
   className = "",
-}: Readonly<{
+}: {
   children: React.ReactNode;
   className?: string;
-}>) => {
+}) => {
   return (
     <>
       <div

@@ -151,6 +151,12 @@ export const getProductBySlug = async (productSlug: string) => {
                   slug
                 }
               }
+              seo {
+                openGraph {
+                  title
+                  description
+                }
+              }
             }
           }
         `,
@@ -173,7 +179,7 @@ export const getProductBySlug = async (productSlug: string) => {
   }
 };
 
-export const getProductMetaData = async (productSlug: string) => {
+export const getProductCategoryBySlug = async (categorySlug: string) => {
   try {
     const response = await fetch(WPGRAPHQL_API, {
       method: "POST",
@@ -182,19 +188,40 @@ export const getProductMetaData = async (productSlug: string) => {
       },
       body: JSON.stringify({
         query: `
-          query RolexProductSeo($productSlug: ID!) {
-          product(idType: SLUG, id: $productSlug) {
-            seo {
-              openGraph {
-                title
-                description
+          query RolexProductCategoryBySlug($categorySlug: ID!) {
+            productCategory(idType: SLUG, id: $categorySlug) {
+              seo {
+                openGraph {
+                  title
+                  description
+                }
               }
+              products {
+                nodes {
+                  featuredImage {
+                    node {
+                      sourceUrl
+                      altText
+                      mediaDetails {
+                        width
+                        height
+                      }
+                    }
+                  }
+                  rolexProducts {
+                    modelName
+                    modelCase
+                  }
+                  slug
+                }
+              }
+              name
+              count
             }
           }
-        }
         `,
         variables: {
-          productSlug: productSlug,
+          categorySlug: categorySlug,
         },
       }),
       next: {
