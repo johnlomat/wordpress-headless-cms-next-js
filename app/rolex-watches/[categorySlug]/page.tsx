@@ -69,31 +69,16 @@ const ProductCategory = async ({
           </Col>
           <Col className="grid w-full grid-cols-2 gap-[0.5rem] lg:grid-cols-3">
             {products.map((product: any, index: number) => (
-              <ProductCard key={index}>
-                <ProductCard.LinkWrapper
-                  href={`/rolex-watches/${params.categorySlug}/${product.slug}`}
-                >
-                  <ProductCard.ImageWrapper
-                    src={product.featuredImage.node.sourceUrl}
-                    alt={product.featuredImage.node.altText}
-                    width={product.featuredImage.node.mediaDetails.width}
-                    height={product.featuredImage.node.mediaDetails.height}
-                  />
-                  <ProductCard.BodyWrapper>
-                    <div className="mb-[0.3125rem]">
-                      <h3>
-                        <span className="rlx-legend16-bold block">Rolex</span>
-                        <span className="rlx-body24-bold block">
-                          {product.rolexProducts.modelName}
-                        </span>
-                      </h3>
-                    </div>
-                    <div className="rlx-legend16-light">
-                      {product.rolexProducts.modelCase}
-                    </div>
-                  </ProductCard.BodyWrapper>
-                </ProductCard.LinkWrapper>
-              </ProductCard>
+              <ProductCard
+                key={index}
+                href={`/rolex-watches/${params.categorySlug}/${product.slug}`}
+                src={product.featuredImage.node.sourceUrl}
+                alt={product.featuredImage.node.altText}
+                width={product.featuredImage.node.mediaDetails.width}
+                height={product.featuredImage.node.mediaDetails.height}
+                modelName={product.rolexProducts.modelName}
+                modelCase={product.rolexProducts.modelCase}
+              />
             ))}
           </Col>
         </Row>
