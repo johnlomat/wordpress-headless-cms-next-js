@@ -184,6 +184,7 @@ const ProductPage = async ({
               alt={productImageAltText}
               width={800}
               height={1180}
+              priority={true}
             />
           </Col>
         </Row>
