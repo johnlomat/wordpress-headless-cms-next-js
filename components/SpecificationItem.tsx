@@ -1,18 +1,16 @@
 import React from "react";
 
-const SpecificationItem = ({ children }: { children: React.ReactNode }) => (
-  <div>{children}</div>
+const SpecificationItem = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: string;
+}) => (
+  <div>
+    <div className="rlx-body20-bold text-rlx-brown">{label}</div>
+    <div className="rlx-body20-light text-rlx-black">{value}</div>
+  </div>
 );
-
-const Label = ({ children }: { children: React.ReactNode }) => (
-  <div className="rlx-body20-bold text-rlx-brown">{children}</div>
-);
-
-const Value = ({ children }: { children: React.ReactNode }) => (
-  <div className="rlx-body20-light text-rlx-black">{children}</div>
-);
-
-SpecificationItem.Label = Label;
-SpecificationItem.Value = Value;
 
 export default SpecificationItem;

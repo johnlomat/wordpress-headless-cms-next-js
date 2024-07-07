@@ -195,26 +195,12 @@ const ProductPage = async ({
             <div className="flex flex-row space-x-[8.483%] pb-[1.875rem] lg:flex-row">
               <div className="w-1/2 space-y-[1.25rem]">
                 {specificationsOne.map((specification, index) => (
-                  <SpecificationItem key={index}>
-                    <SpecificationItem.Label>
-                      {specification.label}
-                    </SpecificationItem.Label>
-                    <SpecificationItem.Value>
-                      {specification.value}
-                    </SpecificationItem.Value>
-                  </SpecificationItem>
+                  <SpecificationItem key={index} {...specification} />
                 ))}
               </div>
               <div className="w-1/2 space-y-[1.25rem]">
                 {specificationsTwo.map((specification, index) => (
-                  <SpecificationItem key={index}>
-                    <SpecificationItem.Label>
-                      {specification.label}
-                    </SpecificationItem.Label>
-                    <SpecificationItem.Value>
-                      {specification.value}
-                    </SpecificationItem.Value>
-                  </SpecificationItem>
+                  <SpecificationItem key={index} {...specification} />
                 ))}
               </div>
             </div>
