@@ -1,4 +1,3 @@
-import React from "react";
 import { removeDuplicateClasses } from "@/utils/helpers";
 
 export const Section = ({

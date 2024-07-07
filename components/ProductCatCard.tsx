@@ -1,4 +1,3 @@
-import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -42,7 +41,6 @@ const ImageWrapper: React.FC<ImageWrapperProps> = ({
         width={width}
         height={height}
         className="transition-all duration-300 ease-in-out group-hover:scale-110"
-        unoptimized
       />
     </div>
   </>

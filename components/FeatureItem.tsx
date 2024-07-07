@@ -1,5 +1,3 @@
-import React from "react";
-
 const FeatureItem = ({ children }: { children: React.ReactNode }) => (
   <div className="rlx-spacing-y">{children}</div>
 );

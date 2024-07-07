@@ -107,7 +107,7 @@ const RolexWatches = () => {
                     src={family.banner_image}
                     alt={family.family_name}
                     width={810}
-                    height={410}
+                    height={540}
                   />
                   <ProductCatCard.BodyWrapper>
                     <h3>
@@ -136,7 +136,7 @@ const RolexWatches = () => {
                     src={family.banner_image}
                     alt={family.family_name}
                     width={810}
-                    height={410}
+                    height={540}
                   />
                   <ProductCatCard.BodyWrapper>
                     <h3>
@@ -165,7 +165,7 @@ const RolexWatches = () => {
                     src={family.banner_image}
                     alt={family.family_name}
                     width={810}
-                    height={410}
+                    height={540}
                   />
                   <ProductCatCard.BodyWrapper>
                     <h3>

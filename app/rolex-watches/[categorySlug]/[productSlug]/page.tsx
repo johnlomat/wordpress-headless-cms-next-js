@@ -184,7 +184,6 @@ const ProductPage = async ({
               alt={productImageAltText}
               width={800}
               height={1180}
-              unoptimized
             />
           </Col>
         </Row>
@@ -219,7 +218,6 @@ const ProductPage = async ({
               alt={specificationImageAltText}
               width={750}
               height={844}
-              unoptimized
             />
           </Col>
         </Row>
@@ -239,7 +237,6 @@ const ProductPage = async ({
                   width={feature.desktop_image.width}
                   height={feature.desktop_image.height}
                   className="hidden md:block"
-                  unoptimized
                 />
                 <Image
                   src={feature.mobile_image.src}
@@ -247,7 +244,6 @@ const ProductPage = async ({
                   width={feature.mobile_image.width}
                   height={feature.mobile_image.height}
                   className="block md:hidden"
-                  unoptimized
                 />
               </FeatureItem>
             ))}
@@ -271,7 +267,6 @@ const ProductPage = async ({
                   width={lastFeature.desktop_image.width}
                   height={lastFeature.desktop_image.height}
                   className="hidden w-full md:block"
-                  unoptimized
                 />
                 <Image
                   src={lastFeature.mobile_image.src}
@@ -279,7 +274,6 @@ const ProductPage = async ({
                   width={lastFeature.mobile_image.width}
                   height={lastFeature.mobile_image.height}
                   className="mt-[0!important] block w-full md:hidden"
-                  unoptimized
                 />
               </FeatureItem>
             }

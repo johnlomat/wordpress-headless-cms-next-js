@@ -24,7 +24,7 @@ const ProductCard = ({
       href={href}
       className="space-y-[0.625rem] bg-rlx-beige px-[1.25rem] pb-[1.875rem] pt-[1.25rem] md:px-[1.875rem] md:pb-[3.125rem] lg:px-[3.125rem]"
     >
-      <Image src={src} alt={alt} width={width} height={height} unoptimized />
+      <Image src={src} alt={alt} width={width} height={height} />
       <div className="text-rlx-brown">
         <div className="mb-[0.3125rem]">
           <h3>

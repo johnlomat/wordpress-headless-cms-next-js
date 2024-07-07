@@ -24,9 +24,6 @@ export const getImage = async (id: number) => {
           id: id,
         },
       }),
-      next: {
-        revalidate: 3600,
-      },
     });
 
     if (!response.ok) {
