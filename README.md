@@ -2,12 +2,6 @@
 
 This project demonstrates how to use WordPress as a headless CMS with Next.js. It leverages Advanced Custom Fields (ACF) to manage custom data in WordPress and fetches this data via the WPGraphQL plugin to render content on the Next.js frontend.
 
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Features](#features)
-- [Requirements](#requirements)
-
 ## Introduction
 
 This project uses WordPress as a headless CMS, where WordPress manages the content and Next.js handles the frontend rendering. By using ACF, you can create custom fields and structures within WordPress and then fetch this data using the WPGraphQL plugin.
