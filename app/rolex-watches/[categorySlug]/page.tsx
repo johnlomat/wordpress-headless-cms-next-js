@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { robots } from "@/app/robots-metadata";
 import { Section, Row, Col } from "@/components/Layouts";
 import ProductCard from "@/components/ProductCard";
 import { getProductCategoryBySlug } from "@/lib/get-products";
@@ -24,6 +25,7 @@ export async function generateMetadata({
     title: productCategoryData.data.productCategory.seo.openGraph.title,
     description:
       productCategoryData.data.productCategory.seo.openGraph.description,
+    ...robots,
   };
 }
 

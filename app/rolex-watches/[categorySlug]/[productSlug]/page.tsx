@@ -1,5 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
+import { robots } from "@/app/robots-metadata";
 import { getProductBySlug } from "@/lib/get-products";
 import { Section, Row, Col } from "@/components/Layouts";
 import SpecificationItem from "@/components/SpecificationItem";
@@ -25,6 +26,7 @@ export async function generateMetadata({
   return {
     title: productData.data.product.seo.openGraph.title,
     description: productData.data.product.seo.openGraph.description,
+    ...robots,
   };
 }
 

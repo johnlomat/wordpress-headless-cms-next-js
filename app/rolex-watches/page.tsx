@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { robots } from "@/app/robots-metadata";
 import { Section, Row, Col } from "@/components/Layouts";
 import ProductCatCard from "@/components/ProductCatCard";
 import { prefix } from "@/utils/prefix";
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
   title: "Rolex Watches | [Retailer Name]",
   description:
     "Browse Rolex watches online at Woo Hing Brothers, an Official Authorised Rolex Retailer of men&#039;&#039;s and ladies Rolex watches.",
+  ...robots,
 };
 
 const classicWatches = [

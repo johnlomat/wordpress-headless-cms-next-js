@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { robots } from "@/app/robots-metadata";
 
 export const metadata: Metadata = {
   title: "WordPress Headless CMS",
   description:
     "A project utilizing WordPress as a headless CMS with WPGraphQL, ACF, and Rank Math SEO",
+  ...robots,
 };
 
 export default function Home() {
