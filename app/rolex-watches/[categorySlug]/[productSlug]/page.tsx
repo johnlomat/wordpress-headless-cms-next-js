@@ -10,12 +10,12 @@ import FeatureItem from "@/components/FeatureItem";
 import CustomBreadcrumb from "@/components/Breadcrumb";
 
 export async function generateMetadata({
-  params,
+  params: { productSlug },
 }: {
   params: { productSlug: string };
 }) {
   // fetch data
-  const productData = await getProductBySlug(params.productSlug);
+  const productData = await getProductBySlug(productSlug);
 
   // Handle case where no products are found
   if (!productData.data.product) {
@@ -31,12 +31,12 @@ export async function generateMetadata({
 }
 
 const ProductPage = async ({
-  params,
+  params: { productSlug, categorySlug },
 }: {
   params: { productSlug: string; categorySlug: string };
 }) => {
   // Fetch product data
-  const productData = await getProductBySlug(params.productSlug);
+  const productData = await getProductBySlug(productSlug);
 
   // Handle case where no products are found
   if (!productData.data.product) {
@@ -46,8 +46,8 @@ const ProductPage = async ({
   const productCategories = productData.data.product.productCategories.nodes[0];
 
   // Redirect if the category slug doesn't match
-  if (params.categorySlug !== productCategories.slug) {
-    redirect(`/rolex-watches/${productCategories}/${params.productSlug}`);
+  if (categorySlug !== productCategories.slug) {
+    redirect(`/rolex-watches/${productCategories}/${productSlug}`);
   }
 
   const productACF = productData.data.product.rolexProducts;

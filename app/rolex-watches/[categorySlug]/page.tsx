@@ -6,14 +6,12 @@ import { getProductCategoryBySlug } from "@/lib/get-products";
 import CustomBreadcrumb from "@/components/Breadcrumb";
 
 export async function generateMetadata({
-  params,
+  params: { categorySlug },
 }: {
   params: { categorySlug: string };
 }) {
   // fetch data
-  const productCategoryData = await getProductCategoryBySlug(
-    params.categorySlug,
-  );
+  const productCategoryData = await getProductCategoryBySlug(categorySlug);
 
   // Handle case where no products are found
   if (!productCategoryData.data.productCategory) {
@@ -30,13 +28,11 @@ export async function generateMetadata({
 }
 
 const ProductCategory = async ({
-  params,
+  params: { categorySlug },
 }: {
   params: { categorySlug: string };
 }) => {
-  const productCategoryData = await getProductCategoryBySlug(
-    params.categorySlug,
-  );
+  const productCategoryData = await getProductCategoryBySlug(categorySlug);
 
   if (!productCategoryData.data.productCategory) {
     notFound();
@@ -73,7 +69,7 @@ const ProductCategory = async ({
             {products.map((product: any, index: number) => (
               <ProductCard
                 key={index}
-                href={`/rolex-watches/${params.categorySlug}/${product.slug}`}
+                href={`/rolex-watches/${categorySlug}/${product.slug}`}
                 src={product.featuredImage.node.sourceUrl}
                 alt={product.featuredImage.node.altText}
                 width={product.featuredImage.node.mediaDetails.width}

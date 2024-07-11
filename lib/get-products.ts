@@ -165,6 +165,9 @@ export const getProductBySlug = async (productSlug: string) => {
           productSlug: productSlug,
         },
       }),
+      next: {
+        revalidate: 60,
+      },
     });
 
     if (!response.ok) {
@@ -222,6 +225,9 @@ export const getProductCategoryBySlug = async (categorySlug: string) => {
           categorySlug: categorySlug,
         },
       }),
+      next: {
+        revalidate: 60,
+      },
     });
 
     if (!response.ok) {
