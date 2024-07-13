@@ -197,7 +197,7 @@ export const getProductCategoryBySlug = async (categorySlug: string) => {
                   description
                 }
               }
-              products {
+              products(first: 100) {
                 nodes {
                   featuredImage {
                     node {
