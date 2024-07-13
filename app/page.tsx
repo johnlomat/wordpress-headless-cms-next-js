@@ -15,9 +15,16 @@ export default function Home() {
       <div className="mx-auto max-w-lg rounded-lg bg-white p-6 text-center shadow-md">
         <h1 className="mb-4 text-3xl font-bold">Welcome to My Project</h1>
         <p className="mb-6 text-lg">
-          This project utilizes WordPress as a headless CMS with WPGraphQL to
-          query data, Advanced Custom Fields (ACF) for custom content types, and
-          Rank Math SEO for optimizing search engine visibility.
+          This project utilizes WordPress as a headless CMS, leveraging
+          WPGraphQL to query data efficiently. Advanced Custom Fields (ACF) are
+          employed to create custom content types, enhancing the flexibility and
+          customization of the content. Rank Math SEO is integrated to optimize
+          search engine visibility, ensuring the content is easily discoverable.
+          The frontend is built using Next.js, providing a robust and scalable
+          framework for delivering a dynamic and responsive user experience.
+          This combination of technologies ensures a powerful and flexible
+          setup, capable of handling diverse content requirements and delivering
+          optimal performance.
         </p>
         <Link
           href="/rolex-watches"
