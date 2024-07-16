@@ -1,4 +1,4 @@
-const WPGRAPHQL_API = `${process.env.WORDPRESS_GRAPHQL_API}`;
+import { WPGRAPHQL_API } from "@/utils/constants";
 
 export const getProductBySlug = async (productSlug: string) => {
   try {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { robots } from "@/app/robots-metadata";
 import { Section, Row, Col } from "@/components/Layouts";
 import ProductCatCard from "@/components/ProductCatCard";
-import { prefix } from "@/utils/prefix";
+import { WORDPRESS_DOMAIN } from "@/utils/constants";
 
 // Return Seo title and description
 export const metadata: Metadata = {
@@ -14,27 +14,27 @@ export const metadata: Metadata = {
 
 const classicWatches = [
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-day-date.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-day-date.jpg`,
     family_name: "Day-Date",
     link: "/rolex-watches/day-date",
   },
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-datejust.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-datejust.jpg`,
     family_name: "Datejust",
     link: "/rolex-watches/datejust",
   },
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-lady-datejust.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-lady-datejust.jpg`,
     family_name: "Lady-Datejust",
     link: "/rolex-watches/lady-datejust",
   },
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-sky-dweller.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-sky-dweller.jpg`,
     family_name: "Sky-Dweller",
     link: "/rolex-watches/sky-dweller",
   },
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-oyster-perpetual.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-oyster-perpetual.jpg`,
     family_name: "Oyster Perpetual",
     link: "/rolex-watches/oyster-perpetual",
   },
@@ -42,42 +42,42 @@ const classicWatches = [
 
 const professionalWatches = [
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-air-king.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-air-king.jpg`,
     family_name: "Air-King",
     link: "/rolex-watches/air-king",
   },
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-gmt-master-II.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-gmt-master-II.jpg`,
     family_name: "GMT-Master II",
     link: "/rolex-watches/gmt-master-ii",
   },
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-sea-dweller.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-sea-dweller.jpg`,
     family_name: "Sea-Dweller",
     link: "/rolex-watches/sea-dweller",
   },
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-submariner.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-submariner.jpg`,
     family_name: "Submariner",
     link: "/rolex-watches/submariner",
   },
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-cosmograph-daytona.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-cosmograph-daytona.jpg`,
     family_name: "Cosmograph Daytona",
     link: "/rolex-watches/cosmograph-daytona",
   },
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-yacht-master.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-yacht-master.jpg`,
     family_name: "Yacht-Master",
     link: "/rolex-watches/yacht-master",
   },
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-explorer.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-explorer.jpg`,
     family_name: "Explorer",
     link: "/rolex-watches/explorer",
   },
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-deepsea.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-deepsea.jpg`,
     family_name: "Deepsea",
     link: "/rolex-watches/deepsea",
   },
@@ -85,7 +85,7 @@ const professionalWatches = [
 
 const perpetualWatch = [
   {
-    banner_image: `${prefix}/wp-content/uploads/2024/07/rolex-watches-1908.jpg`,
+    banner_image: `${WORDPRESS_DOMAIN}/wp-content/uploads/2024/07/rolex-watches-1908.jpg`,
     family_name: "1908",
     link: "/rolex-watches/1908",
   },
