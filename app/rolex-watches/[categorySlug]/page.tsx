@@ -2,8 +2,22 @@ import { notFound } from "next/navigation";
 import { robots } from "@/app/robots-metadata";
 import { Section, Row, Col } from "@/components/Layouts";
 import ProductCard from "@/components/ProductCard";
-import { getProductCategoryBySlug } from "@/lib/get-products";
+import {
+  getProductCategoryBySlug,
+  getAllProductCategoriesSlug,
+} from "@/lib/get-products";
 import CustomBreadcrumb from "@/components/Breadcrumb";
+
+// Comment this out to disable SSG
+export async function generateStaticParams() {
+  const productCategoriesData = await getAllProductCategoriesSlug();
+
+  return productCategoriesData.data.productCategories.nodes.map(
+    (productCategoryData: any) => {
+      categorySlug: productCategoryData.slug;
+    },
+  );
+}
 
 export async function generateMetadata({
   params: { categorySlug },
@@ -13,7 +27,6 @@ export async function generateMetadata({
   // fetch data
   const productCategoryData = await getProductCategoryBySlug(categorySlug);
 
-  // Handle case where no products are found
   if (!productCategoryData.data.productCategory) {
     notFound();
   }

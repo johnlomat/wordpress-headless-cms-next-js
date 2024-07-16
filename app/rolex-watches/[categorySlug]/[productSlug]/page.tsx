@@ -1,13 +1,24 @@
 import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
 import { robots } from "@/app/robots-metadata";
-import { getProductBySlug } from "@/lib/get-products";
+import { getProductBySlug, getAllProductsSlug } from "@/lib/get-products";
 import { Section, Row, Col } from "@/components/Layouts";
 import SpecificationItem from "@/components/SpecificationItem";
 import { SecondaryButton } from "@/components/Buttons";
 import Price from "@/components/Price";
 import FeatureItem from "@/components/FeatureItem";
 import CustomBreadcrumb from "@/components/Breadcrumb";
+
+// Comment this out to disable SSG
+export async function generateStaticParams() {
+  // fetch data
+  const productsData = await getAllProductsSlug();
+
+  return productsData.map((productData: any) => ({
+    productSlug: productData.slug,
+    categorySlug: productData.productCategories.nodes[0].slug,
+  }));
+}
 
 export async function generateMetadata({
   params: { productSlug },
@@ -47,7 +58,7 @@ const ProductPage = async ({
 
   // Redirect if the category slug doesn't match
   if (categorySlug !== productCategories.slug) {
-    redirect(`/rolex-watches/${productCategories}/${productSlug}`);
+    redirect(`/rolex-watches/${productCategories.slug}/${productSlug}`);
   }
 
   const productACF = productData.data.product.rolexProducts;
@@ -81,7 +92,7 @@ const ProductPage = async ({
   ];
 
   const specificationImage = productACF.specificationImage.node.sourceUrl;
-  const specificationImageAltText = productACF.specificationImage.node.altTest;
+  const specificationImageAltText = productACF.specificationImage.node.altText;
 
   const features = [
     {
