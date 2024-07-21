@@ -1,5 +1,5 @@
 const Price = ({ price }: { price: any }) => {
-  price = parseFloat(price);
+  price = Number(price);
 
   return (
     <>
