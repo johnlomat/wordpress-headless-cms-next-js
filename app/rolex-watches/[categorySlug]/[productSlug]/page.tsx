@@ -1,36 +1,36 @@
-import { notFound, redirect } from "next/navigation";
-import Image from "next/image";
-import { robots } from "@/app/robots-metadata";
-import { getProductBySlug, getAllProductsSlug } from "@/lib/get-products";
-import { Section, Row, Col } from "@/components/Layouts";
-import SpecificationItem from "@/components/SpecificationItem";
-import { SecondaryButton } from "@/components/Buttons";
-import Price from "@/components/Price";
-import FeatureItem from "@/components/FeatureItem";
-import CustomBreadcrumb from "@/components/Breadcrumb";
+import { notFound, redirect } from 'next/navigation'
+import Image from 'next/image'
+import { robots } from '@/app/robots-metadata'
+import { getProductBySlug, getAllProductsSlug } from '@/lib/get-products'
+import { Section, Row, Col } from '@/components/Layouts'
+import SpecificationItem from '@/components/SpecificationItem'
+import { SecondaryButton } from '@/components/Buttons'
+import Price from '@/components/Price'
+import FeatureItem from '@/components/FeatureItem'
+import CustomBreadcrumb from '@/components/Breadcrumb'
 
 // Comment this out to disable SSG
 export async function generateStaticParams() {
   // fetch data
-  const productsData = await getAllProductsSlug();
+  const productsData = await getAllProductsSlug()
 
   return productsData.map((productData: any) => ({
     productSlug: productData.slug,
     categorySlug: productData.productCategories.nodes[0].slug,
-  }));
+  }))
 }
 
 export async function generateMetadata({
   params: { productSlug },
 }: {
-  params: { productSlug: string };
+  params: { productSlug: string }
 }) {
   // fetch data
-  const productData = await getProductBySlug(productSlug);
+  const productData = await getProductBySlug(productSlug)
 
   // Handle case where no products are found
   if (!productData.data.product) {
-    notFound();
+    notFound()
   }
 
   // Return Seo title and description
@@ -38,61 +38,60 @@ export async function generateMetadata({
     title: productData.data.product.seo.openGraph.title,
     description: productData.data.product.seo.openGraph.description,
     ...robots,
-  };
+  }
 }
 
 const ProductPage = async ({
   params: { productSlug, categorySlug },
 }: {
-  params: { productSlug: string; categorySlug: string };
+  params: { productSlug: string; categorySlug: string }
 }) => {
   // Fetch product data
-  const productData = await getProductBySlug(productSlug);
+  const productData = await getProductBySlug(productSlug)
 
   // Handle case where no products are found
   if (!productData.data.product) {
-    notFound();
+    notFound()
   }
 
-  const productCategories = productData.data.product.productCategories.nodes[0];
+  const productCategories = productData.data.product.productCategories.nodes[0]
 
   // Redirect if the category slug doesn't match
   if (categorySlug !== productCategories.slug) {
-    redirect(`/rolex-watches/${productCategories.slug}/${productSlug}`);
+    redirect(`/rolex-watches/${productCategories.slug}/${productSlug}`)
   }
 
-  const productACF = productData.data.product.rolexProducts;
+  const productACF = productData.data.product.rolexProducts
 
   // Extract relevant product data
-  const productTitle = productData.data.product.title;
-  const modelName = productACF.modelName;
-  const regularPrice = productACF.regularPrice;
-  const modelCase = productACF.modelCase;
-  const brochure = productACF.brochure;
+  const productTitle = productData.data.product.title
+  const modelName = productACF.modelName
+  const regularPrice = productACF.regularPrice
+  const modelCase = productACF.modelCase
+  const brochure = productACF.brochure
 
-  const productImageSrc = productData.data.product.featuredImage.node.sourceUrl;
-  const productImageAltText =
-    productData.data.product.featuredImage.node.altText;
+  const productImageSrc = productData.data.product.featuredImage.node.sourceUrl
+  const productImageAltText = productData.data.product.featuredImage.node.altText
 
   // Define specifications for rendering
   const specificationsOne = [
-    { label: "Reference", value: productACF.reference },
-    { label: "Model Case", value: productACF.modelCase },
-    { label: "Water Resistance", value: productACF.waterResistance },
-    { label: "Bezel", value: productACF.bezel },
-    { label: "Dial", value: productACF.dial },
-  ];
+    { label: 'Reference', value: productACF.reference },
+    { label: 'Model Case', value: productACF.modelCase },
+    { label: 'Water Resistance', value: productACF.waterResistance },
+    { label: 'Bezel', value: productACF.bezel },
+    { label: 'Dial', value: productACF.dial },
+  ]
 
   const specificationsTwo = [
-    { label: "Bracelet", value: productACF.bracelet },
-    { label: "Movement", value: productACF.movement },
-    { label: "Calibre", value: productACF.movement },
-    { label: "Power Reserve", value: productACF.powerReserve },
-    { label: "Certification", value: productACF.certification },
-  ];
+    { label: 'Bracelet', value: productACF.bracelet },
+    { label: 'Movement', value: productACF.movement },
+    { label: 'Calibre', value: productACF.movement },
+    { label: 'Power Reserve', value: productACF.powerReserve },
+    { label: 'Certification', value: productACF.certification },
+  ]
 
-  const specificationImage = productACF.specificationImage.node.sourceUrl;
-  const specificationImageAltText = productACF.specificationImage.node.altText;
+  const specificationImage = productACF.specificationImage.node.sourceUrl
+  const specificationImageAltText = productACF.specificationImage.node.altText
 
   const features = [
     {
@@ -143,18 +142,18 @@ const ProductPage = async ({
         height: productACF.feature3ImageMobile.node.mediaDetails.height,
       },
     },
-  ];
+  ]
 
-  const [lastFeature] = features.slice(-1);
+  const [lastFeature] = features.slice(-1)
 
   const breadcrumbItems = [
-    { label: "Rolex Watches", href: "/rolex-watches" },
+    { label: 'Rolex Watches', href: '/rolex-watches' },
     {
       label: productCategories.name,
       href: `/rolex-watches/${productCategories.slug}`,
     },
     { label: productTitle },
-  ];
+  ]
 
   // Render the product page with fetched data
   return (
@@ -170,26 +169,15 @@ const ProductPage = async ({
         <Row className="flex-col-reverse lg:flex-row">
           <Col className="flex w-full flex-col justify-center lg:w-1/3">
             <h1 className="leading-[1.2em]">
-              <span className="rlx-body24-bold mb-[0.625rem] block text-rlx-brown">
-                Rolex
-              </span>
-              <span className="rlx-headline50 mb-[0.625rem] block text-rlx-brown">
-                {modelName}
-              </span>
-              <span className="rlx-body20-light block text-rlx-black">
-                {modelCase}
-              </span>
-              <span className="rlx-body20-light block text-rlx-black">
-                {productTitle}
-              </span>
+              <span className="rlx-body24-bold mb-[0.625rem] block text-rlx-brown">Rolex</span>
+              <span className="rlx-headline50 mb-[0.625rem] block text-rlx-brown">{modelName}</span>
+              <span className="rlx-body20-light block text-rlx-black">{modelCase}</span>
+              <span className="rlx-body20-light block text-rlx-black">{productTitle}</span>
             </h1>
             <div className="mb-4">
               <Price price={regularPrice} />
             </div>
-            <SecondaryButton
-              link="#model-availability"
-              text="Model availability"
-            />
+            <SecondaryButton link="#model-availability" text="Model availability" />
           </Col>
           <Col className="w-full lg:w-1/3">
             <Image
@@ -218,12 +206,7 @@ const ProductPage = async ({
               </div>
             </div>
             <div className="border-t-[1px] border-[rgba(118,118,118,0.3)] pt-[1.875rem]">
-              <SecondaryButton
-                link={brochure}
-                text="Download Brochure"
-                newTab
-                iconRight
-              />
+              <SecondaryButton link={brochure} text="Download Brochure" newTab iconRight />
             </div>
           </Col>
           <Col className="w-full lg:w-2/5">
@@ -295,7 +278,7 @@ const ProductPage = async ({
         </Row>
       </Section>
     </>
-  );
-};
+  )
+}
 
-export default ProductPage;
+export default ProductPage

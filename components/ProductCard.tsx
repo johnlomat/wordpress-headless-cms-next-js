@@ -1,5 +1,5 @@
-import Link from "next/link";
-import Image from "next/image";
+import Link from 'next/link'
+import Image from 'next/image'
 
 // Product Card
 const ProductCard = ({
@@ -11,13 +11,13 @@ const ProductCard = ({
   modelName,
   modelCase,
 }: {
-  href: string;
-  src: string;
-  alt: string;
-  width: number;
-  height: number;
-  modelName: string;
-  modelCase: string;
+  href: string
+  src: string
+  alt: string
+  width: number
+  height: number
+  modelName: string
+  modelCase: string
 }) => (
   <>
     <Link
@@ -36,6 +36,6 @@ const ProductCard = ({
       </div>
     </Link>
   </>
-);
+)
 
-export default ProductCard;
+export default ProductCard

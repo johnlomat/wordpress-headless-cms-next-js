@@ -1,17 +1,17 @@
-import type { CustomFlowbiteTheme } from "flowbite-react";
+import type { CustomFlowbiteTheme } from 'flowbite-react'
 
-export const secondaryButtonTheme: CustomFlowbiteTheme["button"] = {
-  base: "inline-flex rlx-fixed14",
+export const secondaryButtonTheme: CustomFlowbiteTheme['button'] = {
+  base: 'inline-flex rlx-fixed14',
   inner: {
-    base: "flex",
+    base: 'flex',
   },
   color: {
-    primary: "text-rlx-green",
+    primary: 'text-rlx-green',
   },
   pill: {
-    off: "rounded-0",
+    off: 'rounded-0',
   },
   size: {
     none: undefined,
   },
-};
+}

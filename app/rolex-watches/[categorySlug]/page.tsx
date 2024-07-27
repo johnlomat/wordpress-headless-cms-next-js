@@ -1,65 +1,59 @@
-import { notFound } from "next/navigation";
-import { robots } from "@/app/robots-metadata";
-import { Section, Row, Col } from "@/components/Layouts";
-import ProductCard from "@/components/ProductCard";
-import {
-  getProductCategoryBySlug,
-  getAllProductCategoriesSlug,
-} from "@/lib/get-products";
-import CustomBreadcrumb from "@/components/Breadcrumb";
+import { notFound } from 'next/navigation'
+import { robots } from '@/app/robots-metadata'
+import { Section, Row, Col } from '@/components/Layouts'
+import ProductCard from '@/components/ProductCard'
+import { getProductCategoryBySlug, getAllProductCategoriesSlug } from '@/lib/get-products'
+import CustomBreadcrumb from '@/components/Breadcrumb'
 
 // Comment this out to disable SSG
 export async function generateStaticParams() {
-  const productCategoriesData = await getAllProductCategoriesSlug();
+  const productCategoriesData = await getAllProductCategoriesSlug()
 
-  return productCategoriesData.data.productCategories.nodes.map(
-    (productCategoryData: any) => {
-      categorySlug: productCategoryData.slug;
-    },
-  );
+  return productCategoriesData.data.productCategories.nodes.map((productCategoryData: any) => {
+    categorySlug: productCategoryData.slug
+  })
 }
 
 export async function generateMetadata({
   params: { categorySlug },
 }: {
-  params: { categorySlug: string };
+  params: { categorySlug: string }
 }) {
   // fetch data
-  const productCategoryData = await getProductCategoryBySlug(categorySlug);
+  const productCategoryData = await getProductCategoryBySlug(categorySlug)
 
   if (!productCategoryData.data.productCategory) {
-    notFound();
+    notFound()
   }
 
   // Return Seo title and description
   return {
     title: productCategoryData.data.productCategory.seo.openGraph.title,
-    description:
-      productCategoryData.data.productCategory.seo.openGraph.description,
+    description: productCategoryData.data.productCategory.seo.openGraph.description,
     ...robots,
-  };
+  }
 }
 
 const ProductCategory = async ({
   params: { categorySlug },
 }: {
-  params: { categorySlug: string };
+  params: { categorySlug: string }
 }) => {
-  const productCategoryData = await getProductCategoryBySlug(categorySlug);
+  const productCategoryData = await getProductCategoryBySlug(categorySlug)
 
   if (!productCategoryData.data.productCategory) {
-    notFound();
+    notFound()
   }
 
-  const title = productCategoryData.data.productCategory.name;
-  const products = productCategoryData.data.productCategory.products.nodes;
+  const title = productCategoryData.data.productCategory.name
+  const products = productCategoryData.data.productCategory.products.nodes
 
   const breadcrumbItems = [
-    { label: "Rolex Watches", href: "/rolex-watches" },
+    { label: 'Rolex Watches', href: '/rolex-watches' },
     {
       label: title,
     },
-  ];
+  ]
 
   return (
     <>
@@ -95,7 +89,7 @@ const ProductCategory = async ({
         </Row>
       </Section>
     </>
-  );
-};
+  )
+}
 
-export default ProductCategory;
+export default ProductCategory

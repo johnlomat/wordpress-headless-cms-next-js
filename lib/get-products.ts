@@ -1,11 +1,11 @@
-import { WPGRAPHQL_API } from "@/utils/constants";
+import { WPGRAPHQL_API } from '@/utils/constants'
 
 export const getProductBySlug = async (productSlug: string) => {
   try {
     const response = await fetch(WPGRAPHQL_API, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         query: `
@@ -168,24 +168,24 @@ export const getProductBySlug = async (productSlug: string) => {
       next: {
         revalidate: 60,
       },
-    });
+    })
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    return await response.json();
+    return await response.json()
   } catch (error) {
-    console.error("Error fetching products:", error);
+    console.error('Error fetching products:', error)
   }
-};
+}
 
 export const getProductCategoryBySlug = async (categorySlug: string) => {
   try {
     const response = await fetch(WPGRAPHQL_API, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         query: `
@@ -228,54 +228,54 @@ export const getProductCategoryBySlug = async (categorySlug: string) => {
       next: {
         revalidate: 60,
       },
-    });
+    })
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    return await response.json();
+    return await response.json()
   } catch (error) {
-    console.error("Error fetching product categories:", error);
+    console.error('Error fetching product categories:', error)
   }
-};
+}
 
 // Define the types for the response
 interface Product {
-  slug: string;
+  slug: string
   productCategories: {
     nodes: {
-      slug: string;
-    }[];
-  };
+      slug: string
+    }[]
+  }
 }
 
 interface ProductsResponse {
   data: {
     products: {
       edges: {
-        cursor: string;
-        node: Product;
-      }[];
+        cursor: string
+        node: Product
+      }[]
       pageInfo: {
-        endCursor: string;
-        hasNextPage: boolean;
-      };
-    };
-  };
+        endCursor: string
+        hasNextPage: boolean
+      }
+    }
+  }
 }
 
 export const getAllProductsSlug = async (): Promise<Product[]> => {
-  let allProducts: Product[] = [];
-  let hasNextPage = true;
-  let endCursor: string | null = null;
+  let allProducts: Product[] = []
+  let hasNextPage = true
+  let endCursor: string | null = null
 
   try {
     while (hasNextPage) {
       const response = await fetch(WPGRAPHQL_API, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           query: `
@@ -307,33 +307,33 @@ export const getAllProductsSlug = async (): Promise<Product[]> => {
         next: {
           revalidate: 60,
         },
-      });
+      })
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`)
       }
 
-      const result: ProductsResponse = await response.json();
-      const products = result.data.products.edges.map((edge) => edge.node);
+      const result: ProductsResponse = await response.json()
+      const products = result.data.products.edges.map((edge) => edge.node)
 
-      allProducts = [...allProducts, ...products];
-      hasNextPage = result.data.products.pageInfo.hasNextPage;
-      endCursor = result.data.products.pageInfo.endCursor;
+      allProducts = [...allProducts, ...products]
+      hasNextPage = result.data.products.pageInfo.hasNextPage
+      endCursor = result.data.products.pageInfo.endCursor
     }
 
-    return allProducts;
+    return allProducts
   } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
+    console.error('Error fetching products:', error)
+    return []
   }
-};
+}
 
 export const getAllProductCategoriesSlug = async () => {
   try {
     const response = await fetch(WPGRAPHQL_API, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         query: `
@@ -349,14 +349,14 @@ export const getAllProductCategoriesSlug = async () => {
       next: {
         revalidate: 60,
       },
-    });
+    })
 
     if (!response.ok) {
-      throw new Error(`HTTP Error status: ${response.status}`);
+      throw new Error(`HTTP Error status: ${response.status}`)
     }
 
-    return response.json();
+    return response.json()
   } catch (error) {
-    console.error("Error fetching product categories:", error);
+    console.error('Error fetching product categories:', error)
   }
-};
+}

@@ -1,4 +1,4 @@
-import { Metadata } from "next";
+import { Metadata } from 'next'
 
 export const robots: Metadata = {
   robots: {
@@ -15,4 +15,4 @@ export const robots: Metadata = {
       notranslate: true,
     },
   },
-};
+}

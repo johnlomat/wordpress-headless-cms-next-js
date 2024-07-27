@@ -1,18 +1,18 @@
-import { Libre_Franklin } from "next/font/google";
-import NextTopLoader from "nextjs-toploader";
+import { Libre_Franklin } from 'next/font/google'
+import NextTopLoader from 'nextjs-toploader'
 
-import "./globals.css";
+import './globals.css'
 
 const libre_franklin = Libre_Franklin({
-  display: "swap",
-  subsets: ["latin"],
-  variable: "--font-libre-franklin",
-});
+  display: 'swap',
+  subsets: ['latin'],
+  variable: '--font-libre-franklin',
+})
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -31,5 +31,5 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-  );
+  )
 }

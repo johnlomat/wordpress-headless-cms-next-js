@@ -1,11 +1,11 @@
-import { WPGRAPHQL_API } from "@/utils/constants";
+import { WPGRAPHQL_API } from '@/utils/constants'
 
 export const getImage = async (id: number) => {
   try {
     const response = await fetch(WPGRAPHQL_API, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         query: `
@@ -27,14 +27,14 @@ export const getImage = async (id: number) => {
       next: {
         revalidate: 60,
       },
-    });
+    })
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    return await response.json();
+    return await response.json()
   } catch (error) {
-    console.error("Error fetching products:", error);
+    console.error('Error fetching products:', error)
   }
-};
+}

@@ -1,14 +1,14 @@
-import Link from "next/link";
-import { Button } from "flowbite-react";
-import { FaChevronRight } from "react-icons/fa6";
-import { IoMdDownload } from "react-icons/io";
-import { secondaryButtonTheme } from "./theme/flowbite-react/ButtonTheme";
+import Link from 'next/link'
+import { Button } from 'flowbite-react'
+import { FaChevronRight } from 'react-icons/fa6'
+import { IoMdDownload } from 'react-icons/io'
+import { secondaryButtonTheme } from './theme/flowbite-react/ButtonTheme'
 
 interface SecondaryButtonProps {
-  link: string;
-  text: string;
-  newTab?: boolean;
-  iconRight?: boolean;
+  link: string
+  text: string
+  newTab?: boolean
+  iconRight?: boolean
 }
 
 export const SecondaryButton: React.FC<SecondaryButtonProps> = ({
@@ -24,7 +24,7 @@ export const SecondaryButton: React.FC<SecondaryButtonProps> = ({
       theme={secondaryButtonTheme}
       color="primary"
       size="none"
-      target={newTab ? "_blank" : undefined}
+      target={newTab ? '_blank' : undefined}
     >
       {iconRight && <IoMdDownload className="mr-[0.375rem] text-[1rem]" />}
       {text}
@@ -32,5 +32,5 @@ export const SecondaryButton: React.FC<SecondaryButtonProps> = ({
         <FaChevronRight className="relative top-[0.225rem] ml-[0.375rem] text-[0.65rem]" />
       )}
     </Button>
-  );
-};
+  )
+}
